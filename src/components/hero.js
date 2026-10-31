@@ -18,7 +18,7 @@ export function hero() {
     )
     .join('');
 
-  return `<section class="hero" aria-labelledby="hero-title"><div class="hero-copy"><p class="eyebrow">The autumn edit / 2026</p><h1 id="hero-title">The art of<br><em>carrying well.</em></h1><p>Quietly expressive leather goods, made to move with you through every chapter.</p><a class="button" href="#/shop">Explore the collection <span>&rarr;</span></a><div class="hero-dots" aria-label="Hero slides">${dots}</div></div><div class="hero-image" aria-label="MORON leather bag collection">${slides}</div></section>`;
+  return `<section class="hero" aria-labelledby="hero-title"><div class="hero-copy"><p class="eyebrow hero-reveal">The autumn edit / 2026</p><h1 id="hero-title"><span>The art of</span><br><em>carrying well.</em></h1><p class="hero-reveal">Quietly expressive leather goods, made to move with you through every chapter.</p><a class="button hero-reveal" href="#/shop">Explore the collection <span>→</span></a><div class="hero-dots hero-reveal" aria-label="Hero slides">${dots}</div></div><div class="hero-image" aria-label="MORON leather bag collection"><div class="hero-grain"></div>${slides}</div></section>`;
 }
 
 export function startCarousel() {
@@ -41,5 +41,19 @@ export function startCarousel() {
       dot.addEventListener('click', () => show(Number(dot.dataset.slide))),
     );
   show(0);
+  const heroImage = document.querySelector('.hero-image');
+  if (heroImage && window.matchMedia('(hover: hover)').matches) {
+    heroImage.addEventListener('pointermove', (event) => {
+      const bounds = heroImage.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+      const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      heroImage.style.setProperty('--pointer-x', `${x * 10}px`);
+      heroImage.style.setProperty('--pointer-y', `${y * 10}px`);
+    });
+    heroImage.addEventListener('pointerleave', () => {
+      heroImage.style.setProperty('--pointer-x', '0px');
+      heroImage.style.setProperty('--pointer-y', '0px');
+    });
+  }
   return window.setInterval(() => show((active + 1) % images.length), 5000);
 }

@@ -10,12 +10,14 @@ import {
 import { validateCheckout } from './modules/checkout.js';
 import { findProduct } from './modules/products.js';
 import { footer } from './components/footer.js';
+import { cartDrawer } from './components/cartDrawer.js';
 import { header, refreshCartCount } from './components/header.js';
 import { startCarousel } from './components/hero.js';
 import { cartPage } from './pages/cartPage.js';
 import { checkoutPage } from './pages/checkoutPage.js';
 import { homePage, renderCatalog } from './pages/home.js';
 import { productDetailsPage } from './pages/productDetails.js';
+import { initMotion, initSignatureCarousel } from './modules/motion.js';
 const app = document.querySelector('#app');
 let catalogState = { category: 'All', term: '', sort: 'featured' };
 let carouselTimer;
@@ -33,7 +35,26 @@ function showToast(message) {
 }
 function renderLayout(content) {
   window.clearInterval(carouselTimer);
-  app.innerHTML = `${header()}<main>${content}</main>${footer()}`;
+  app.innerHTML = `${header()}<main class="page-transition">${content}</main>${footer()}${cartDrawer()}`;
+  initMotion();
+  initSignatureCarousel();
+}
+function setDrawer(open) {
+  const drawer = document.querySelector('.cart-drawer');
+  const scrim = document.querySelector('.drawer-scrim');
+  if (!drawer || !scrim) return;
+  drawer.classList.toggle('open', open);
+  scrim.classList.toggle('open', open);
+  drawer.setAttribute('aria-hidden', String(!open));
+  document.body.classList.toggle('drawer-open', open);
+}
+function refreshDrawer() {
+  const drawer = document.querySelector('.cart-drawer');
+  const scrim = document.querySelector('.drawer-scrim');
+  if (!drawer || !scrim) return;
+  const wasOpen = drawer.classList.contains('open');
+  drawer.outerHTML = cartDrawer().split('<button class="drawer-scrim"')[0];
+  setDrawer(wasOpen);
 }
 function renderRoute() {
   const [, page = '', id] = location.hash.slice(1).split('/');
@@ -57,6 +78,17 @@ document.addEventListener('click', (event) => {
     addToCart(product, quantity);
     refreshCartCount();
     showToast(`${product.name} added to your bag.`);
+    refreshDrawer();
+    setDrawer(true);
+    return;
+  }
+  const save = event.target.closest('[data-wishlist]');
+  if (save) {
+    const saved = save.getAttribute('aria-pressed') === 'true';
+    save.setAttribute('aria-pressed', String(!saved));
+    save.classList.toggle('saved', !saved);
+    showToast(saved ? 'Removed from saved pieces.' : 'Saved for later.');
+    return;
   }
   const category = event.target.closest('[data-category]');
   if (category) {
@@ -67,6 +99,20 @@ document.addEventListener('click', (event) => {
         button.classList.toggle('active', button === category),
       );
     renderCatalog(catalogState);
+    return;
+  }
+  const categoryLink = event.target.closest('[data-category-link]');
+  if (categoryLink) {
+    catalogState.category = categoryLink.dataset.categoryLink;
+    location.hash = '#/shop';
+    window.setTimeout(() => {
+      renderCatalog(catalogState);
+      document
+        .querySelector(`[data-category="${catalogState.category}"]`)
+        ?.classList.add('active');
+      document.querySelector('#shop')?.scrollIntoView({ behavior: 'smooth' });
+    }, 0);
+    return;
   }
   const change = event.target.closest('[data-quantity]');
   if (change) {
@@ -90,6 +136,17 @@ document.addEventListener('click', (event) => {
     const open = nav.classList.toggle('open');
     menu.setAttribute('aria-expanded', String(open));
   }
+  const collections = event.target.closest('.nav-collections');
+  if (collections) {
+    const nav = document.querySelector('nav');
+    const open = nav.classList.toggle('collections-open');
+    collections.setAttribute('aria-expanded', String(open));
+  }
+  if (event.target.closest('[data-cart-toggle]')) {
+    event.preventDefault();
+    setDrawer(true);
+  }
+  if (event.target.closest('.drawer-close, .drawer-scrim')) setDrawer(false);
   if (event.target.closest('.search-link')) {
     location.hash = '#/shop';
     window.setTimeout(() => document.querySelector('#search')?.focus(), 0);
@@ -132,6 +189,15 @@ document.addEventListener('submit', (event) => {
   );
 });
 document.addEventListener('cart:updated', refreshCartCount);
+window.addEventListener(
+  'scroll',
+  () => {
+    document
+      .querySelector('.site-header')
+      ?.classList.toggle('scrolled', window.scrollY > 18);
+  },
+  { passive: true },
+);
 window.addEventListener('hashchange', renderRoute);
 if (!location.hash) location.hash = '#/';
 else renderRoute();

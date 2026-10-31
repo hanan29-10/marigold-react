@@ -6,6 +6,7 @@ export const products = [
     price: 685,
     badge: 'Signature',
     image: '/images/moron-sienna-tote.png',
+    secondaryImage: '/images/moron-hero.png',
     description:
       'A sculptural everyday tote in softly grained Italian leather, finished by hand in our Florence atelier.',
   },
@@ -16,6 +17,7 @@ export const products = [
     price: 540,
     badge: 'New season',
     image: '/images/moron-mara-shoulder.png',
+    secondaryImage: '/images/moron-shoulder.png',
     description:
       'A compact shoulder bag with a graceful curved silhouette and discreet polished hardware.',
   },
@@ -26,6 +28,7 @@ export const products = [
     price: 480,
     badge: 'Limited',
     image: '/images/moron-atelier-clutch.png',
+    secondaryImage: '/images/moron-clutch.png',
     description:
       'A refined champagne-toned clutch for evenings that call for something quietly exceptional.',
   },
@@ -36,6 +39,7 @@ export const products = [
     price: 790,
     badge: 'Signature',
     image: '/images/moron-weekend-carryall.png',
+    secondaryImage: '/images/moron-palma-weekender.png',
     description:
       'A generous carryall designed for spontaneous departures and long-held rituals.',
   },
@@ -46,6 +50,7 @@ export const products = [
     price: 495,
     badge: 'Bestseller',
     image: '/images/moron-cove-crossbody.png',
+    secondaryImage: '/images/moron-noa-camera-bag.png',
     description: 'Hands-free ease in a polished, adjustable crossbody shape.',
   },
   {
@@ -85,6 +90,7 @@ export const products = [
     price: 455,
     badge: 'New season',
     image: '/images/moron-luna-mini-bag.png',
+    secondaryImage: '/images/moron-mara-shoulder.png',
     description:
       'A compact, softly structured bag with a slim shoulder strap and luminous metal closure.',
   },
