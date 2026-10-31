@@ -1,0 +1,10 @@
+import { getCartCount } from '../modules/cart.js';
+
+export function header() {
+  return `<header class="site-header"><a class="brand" href="#/" aria-label="MORON home">MORON <small>leather goods</small></a><button class="menu-button" type="button" aria-label="Toggle navigation" aria-expanded="false">Menu</button><nav aria-label="Main navigation"><a href="#/">Home</a><a href="#/shop">Shop all</a><a href="#/shop">New in</a><a href="#/shop">Collections</a></nav><div class="header-actions"><button class="header-icon search-link" type="button" aria-label="Search products">⌕</button><button class="header-icon account-link" type="button" aria-label="Profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.5 20a7.5 7.5 0 0 1 15 0"></path></svg></button><a href="#/cart" class="cart-link" aria-label="Shopping bag"><span>Bag</span><b class="cart-count">${getCartCount()}</b></a></div></header>`;
+}
+export function refreshCartCount() {
+  document.querySelectorAll('.cart-count').forEach((count) => {
+    count.textContent = getCartCount();
+  });
+}

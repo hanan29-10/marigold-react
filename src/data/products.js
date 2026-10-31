@@ -1,84 +1,176 @@
 export const products = [
   {
-    id: 'luna-mini',
-    name: 'Luna Mini Bag',
-    category: 'Bags',
-    price: 289,
-    badge: 'New arrival',
-    image:
-      'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=900&q=88',
+    id: 'sienna-tote',
+    name: 'Sienna Leather Tote',
+    category: 'Totes',
+    price: 685,
+    badge: 'Signature',
+    image: '/images/moron-sienna-tote.png',
+    description:
+      'A sculptural everyday tote in softly grained Italian leather, finished by hand in our Florence atelier.',
   },
   {
-    id: 'solstice-earrings',
-    name: 'Solstice Earrings',
-    category: 'Jewellery',
-    price: 124,
+    id: 'mara-shoulder',
+    name: 'Mara Shoulder Bag',
+    category: 'Shoulder Bags',
+    price: 540,
+    badge: 'New season',
+    image: '/images/moron-mara-shoulder.png',
+    description:
+      'A compact shoulder bag with a graceful curved silhouette and discreet polished hardware.',
+  },
+  {
+    id: 'atelier-clutch',
+    name: 'Atelier Evening Clutch',
+    category: 'Clutches',
+    price: 480,
+    badge: 'Limited',
+    image: '/images/moron-atelier-clutch.png',
+    description:
+      'A refined champagne-toned clutch for evenings that call for something quietly exceptional.',
+  },
+  {
+    id: 'weekend-carryall',
+    name: 'Weekend Carryall',
+    category: 'Travel',
+    price: 790,
+    badge: 'Signature',
+    image: '/images/moron-weekend-carryall.png',
+    description:
+      'A generous carryall designed for spontaneous departures and long-held rituals.',
+  },
+  {
+    id: 'cove-crossbody',
+    name: 'Cove Crossbody',
+    category: 'Crossbody',
+    price: 495,
     badge: 'Bestseller',
-    image:
-      'https://images.unsplash.com/photo-1635767798638-3e25273a8236?auto=format&fit=crop&w=900&q=88',
+    image: '/images/moron-cove-crossbody.png',
+    description: 'Hands-free ease in a polished, adjustable crossbody shape.',
   },
   {
-    id: 'vienne-shades',
-    name: 'Vienne Sunglasses',
-    category: 'Eyewear',
+    id: 'silk-scarf',
+    name: 'Garden Silk Scarf',
+    category: 'Accessories',
     price: 165,
-    badge: 'Limited',
-    image:
-      'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=88',
+    badge: 'New season',
+    image: '/images/moron-silk-scarf.png',
+    description:
+      'A soft silk finishing note in the collection’s signature warm neutral palette.',
   },
   {
-    id: 'aurore-silk',
-    name: 'Aurore Silk Scarf',
-    category: 'Scarves',
-    price: 98,
+    id: 'sol-keyring',
+    name: 'Sol Leather Keyring',
+    category: 'Accessories',
+    price: 125,
+    badge: 'Gift edition',
+    image: '/images/moron-sol-keyring.png',
+    description:
+      'A useful luxury made in supple leather to travel everywhere with you.',
+  },
+  {
+    id: 'rowan-belt',
+    name: 'Rowan Sculpted Belt',
+    category: 'Accessories',
+    price: 225,
     badge: 'Signature',
-    image:
-      'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=900&q=88',
+    image: '/images/moron-rowan-belt.png',
+    description:
+      'A sculptural belt anchored by a softly polished champagne-tone clasp.',
   },
   {
-    id: 'celine-watch',
-    name: 'Celine Watch',
-    category: 'Watches',
-    price: 420,
-    badge: 'New arrival',
-    image:
-      'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=88',
+    id: 'luna-mini-bag',
+    name: 'Luna Mini Bag',
+    category: 'Shoulder Bags',
+    price: 455,
+    badge: 'New season',
+    image: '/images/moron-luna-mini-bag.png',
+    description:
+      'A compact, softly structured bag with a slim shoulder strap and luminous metal closure.',
   },
   {
-    id: 'muse-cardholder',
-    name: 'Muse Cardholder',
-    category: 'Bags',
-    price: 110,
+    id: 'portofino-top-handle',
+    name: 'Portofino Top Handle',
+    category: 'Totes',
+    price: 720,
+    badge: 'Signature',
+    image: '/images/moron-portofino-top-handle.png',
+    description:
+      'A polished top-handle silhouette with a roomy interior for days that call for refinement.',
+  },
+  {
+    id: 'noa-camera-bag',
+    name: 'Noa Camera Bag',
+    category: 'Crossbody',
+    price: 510,
     badge: 'Bestseller',
-    image:
-      'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=900&q=88',
+    image: '/images/moron-noa-camera-bag.png',
+    description:
+      'An easy, zip-top crossbody with an adjustable strap and carefully considered proportions.',
   },
   {
-    id: 'orbit-bracelet',
-    name: 'Orbit Cuff Bracelet',
-    category: 'Jewellery',
-    price: 145,
+    id: 'celeste-frame-clutch',
+    name: 'Celeste Frame Clutch',
+    category: 'Clutches',
+    price: 520,
     badge: 'Limited',
-    image:
-      'https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&w=900&q=88',
+    image: '/images/moron-celeste-frame-clutch.png',
+    description:
+      'A graceful framed clutch in soft leather, created for celebrations and late dinners.',
   },
   {
-    id: 'noir-belt',
-    name: 'Noir Leather Belt',
-    category: 'Belts',
-    price: 135,
+    id: 'palma-weekender',
+    name: 'Palma Weekender',
+    category: 'Travel',
+    price: 845,
+    badge: 'New season',
+    image: '/images/moron-palma-weekender.png',
+    description:
+      'A refined overnight companion with a wide opening, interior pockets, and a detachable strap.',
+  },
+  {
+    id: 'amara-card-holder',
+    name: 'Amara Card Holder',
+    category: 'Accessories',
+    price: 110,
+    badge: 'Gift edition',
+    image: '/images/moron-amara-card-holder.png',
+    description:
+      'A slim card holder with precisely cut slots and a warm, softly polished finish.',
+  },
+  {
+    id: 'elara-bucket-bag',
+    name: 'Elara Bucket Bag',
+    category: 'Shoulder Bags',
+    price: 595,
+    badge: 'New season',
+    image: '/images/moron-elara-bucket-bag.png',
+    description:
+      'A relaxed bucket shape that closes with a leather drawstring and carries from day into evening.',
+  },
+  {
+    id: 'verona-luggage-tag',
+    name: 'Verona Luggage Tag',
+    category: 'Accessories',
+    price: 85,
+    badge: 'Gift edition',
+    image: '/images/moron-verona-luggage-tag.png',
+    description:
+      'A small, personal finishing touch in durable leather with a discreet window for details.',
+  },
+  {
+    id: 'serena-shopper',
+    name: 'Serena Shopper',
+    category: 'Totes',
+    price: 640,
     badge: 'Signature',
-    image:
-      'https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=900&q=88',
+    image: '/images/moron-hero.png',
+    description:
+      'A generous, lightweight shopper designed to keep its elegant shape through a full day.',
   },
 ];
 
 export const categories = [
   'All',
-  'Bags',
-  'Jewellery',
-  'Eyewear',
-  'Scarves',
-  'Watches',
-  'Belts',
+  ...new Set(products.map((product) => product.category)),
 ];

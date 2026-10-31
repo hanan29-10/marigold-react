@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A plain-English architecture guide for the MORON shop website."
+    />
+    <title>MORON Architecture Guide</title>
+    <style>
+      :root {
+        color: #2e2622;
+        background: #f7f1e8;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        margin: 0;
+        line-height: 1.6;
+      }
+      header {
+        padding: 3rem 7%;
+        background: #2e2622;
+        color: #fffaf3;
+      }
+      main {
+        max-width: 980px;
+        margin: auto;
+        padding: 2rem 7% 4rem;
+      }
+      section {
+        margin-top: 2.5rem;
+      }
+      h1,
+      h2 {
+        line-height: 1.15;
+      }
+      h2 {
+        border-bottom: 1px solid #cdbda9;
+        padding-bottom: 0.5rem;
+      }
+      code,
+      pre {
+        font-family: Consolas, monospace;
+      }
+      code {
+        background: #eadfce;
+        padding: 0.1rem 0.3rem;
+        border-radius: 0.2rem;
+      }
+      pre {
+        overflow: auto;
+        padding: 1rem;
+        background: #fffaf3;
+        border: 1px solid #ded0bd;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fffaf3;
+      }
+      th,
+      td {
+        padding: 0.75rem;
+        border: 1px solid #ded0bd;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #eadfce;
+      }
+      .diagram {
+        padding: 1rem;
+        background: #fffaf3;
+        border-left: 0.35rem solid #916f4c;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p>Developer learning guide</p>
+      <h1>MORON website architecture</h1>
+      <p>
+        This document explains the current project. It does not run or change
+        the shop.
+      </p>
+    </header>
+    <main>
+      <section>
+        <h2>1. The big idea</h2>
+        <p>
+          MORON is a Vite + vanilla JavaScript single-page application.
+          <code>index.html</code> contains an empty <code>#app</code> element.
+          <code>src/main.js</code> chooses a page from the URL hash and inserts
+          that page into <code>#app</code>.
+        </p>
+        <div class="diagram">
+          index.html → src/main.js → header + selected page + footer → #app in
+          the browser products.js → products module → productCard() → product
+          cards cart.js → storage.js → browser Local Storage
+        </div>
+      </section>
+
+      <section>
+        <h2>2. Loading the homepage</h2>
+        <ol>
+          <li>The browser opens <code>index.html</code>.</li>
+          <li>It loads <code>/src/main.js</code> as a JavaScript module.</li>
+          <li>
+            <code>main.js</code> imports CSS, data, pages, components, and logic
+            modules.
+          </li>
+          <li>If there is no hash, it sets the URL to <code>#/</code>.</li>
+          <li><code>renderRoute()</code> calls <code>homePage()</code>.</li>
+          <li>
+            <code>renderLayout()</code> inserts the header, home content, and
+            footer into <code>#app</code>.
+          </li>
+          <li>
+            <code>renderCatalog()</code> inserts the selectable product cards.
+          </li>
+          <li><code>startCarousel()</code> activates the hero slides.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>3. Folder responsibilities</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Location</th>
+              <th>Responsibility</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>src/data</code></td>
+              <td>Static product information and categories.</td>
+            </tr>
+            <tr>
+              <td><code>src/components</code></td>
+              <td>
+                Reusable user-interface pieces: header, footer, hero, and
+                product card.
+              </td>
+            </tr>
+            <tr>
+              <td><code>src/pages</code></td>
+              <td>
+                Complete page templates: home, product detail, cart, and
+                checkout.
+              </td>
+            </tr>
+            <tr>
+              <td><code>src/modules</code></td>
+              <td>
+                Reusable logic: cart, storage, validation, filtering, search,
+                sorting, and catalog creation.
+              </td>
+            </tr>
+            <tr>
+              <td><code>src/styles</code></td>
+              <td>Global visual and mobile-first responsive styles.</td>
+            </tr>
+            <tr>
+              <td><code>public</code></td>
+              <td>
+                Files available directly by URL, such as
+                <code>/images/moron-sienna-tote.png</code>.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>4. Routing</h2>
+        <p>The website uses hash routing rather than a routing library.</p>
+        <pre>
+#/                         → homepage
+#/shop                    → homepage, then the shop section
+#/product/sienna-tote     → product details
+#/cart                    → cart page
+#/checkout                → checkout page</pre>
+        <p>
+          In <code>main.js</code>, <code>location.hash</code> is split into a
+          page name and, when needed, a product id. The
+          <code>hashchange</code> event runs <code>renderRoute()</code>
+          whenever navigation changes.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Product data reaches the screen</h2>
+        <p>
+          <code>src/data/products.js</code> exports a
+          <code>products</code> array. Each object has values such as
+          <code>id</code>, <code>name</code>, <code>category</code>,
+          <code>price</code>, <code>image</code>, and <code>description</code>.
+        </p>
+        <pre>
+products.js
+  → getCatalog() in modules/products.js
+  → productCard(product) in components/productCard.js
+  → HTML placed in .catalog .product-grid</pre>
+        <p>
+          The product id also powers detail links such as
+          <code>#/product/sienna-tote</code> and add-to-cart buttons such as
+          <code>data-add="sienna-tote"</code>.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Search, filter, and sort</h2>
+        <p>
+          <code>home.js</code> keeps the current choices in
+          <code>catalogState</code>.
+        </p>
+        <pre>{ category: 'All', term: '', sort: 'featured' }</pre>
+        <p><code>getCatalog()</code> composes small modules in this order:</p>
+        <div class="diagram">
+          filterByCategory(products, category) → searchProducts(products, term)
+          → sortProducts(products, order) → cards shown in the catalog
+        </div>
+      </section>
+
+      <section>
+        <h2>7. Cart and Local Storage</h2>
+        <p>
+          <code>modules/cart.js</code> owns the active cart. It loads it when
+          the app starts, updates quantities, calculates totals, and asks
+          <code>modules/storage.js</code> to save it.
+        </p>
+        <pre>
+addToCart(product)
+  → saveCart(cart)
+  → localStorage['shopboard-cart'] = JSON text
+  → dispatch 'cart:updated'
+  → refreshCartCount() updates the header</pre>
+        <p>
+          This is why the bag remains after a browser refresh. Checkout is
+          simulated: valid form submission clears the cart and shows a
+          confirmation; it does not process a payment.
+        </p>
+      </section>
+
+      <section>
+        <h2>8. Import and export</h2>
+        <p>
+          JavaScript files share code through ES modules. For example,
+          <code>products.js</code> exports <code>products</code>, and
+          <code>modules/products.js</code> imports it. This keeps source data
+          separate from the functions that search and display it.
+        </p>
+        <pre>
+// products.js
+export const products = [...];
+
+// modules/products.js
+import { products } from '../data/products.js';</pre>
+      </section>
+
+      <section>
+        <h2>9. Main files and what happens if they disappear</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>File</th>
+              <th>Purpose</th>
+              <th>Without it</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>index.html</code></td>
+              <td>Browser entry document and <code>#app</code> mount point.</td>
+              <td>The app cannot start.</td>
+            </tr>
+            <tr>
+              <td><code>src/main.js</code></td>
+              <td>
+                Application controller, routing, layout, and event listeners.
+              </td>
+              <td>The page stays empty.</td>
+            </tr>
+            <tr>
+              <td><code>data/products.js</code></td>
+              <td>Product records and categories.</td>
+              <td>No catalog or product details.</td>
+            </tr>
+            <tr>
+              <td><code>pages/*.js</code></td>
+              <td>HTML templates for complete screens.</td>
+              <td>The related route fails.</td>
+            </tr>
+            <tr>
+              <td><code>components/*.js</code></td>
+              <td>Reusable page pieces.</td>
+              <td>Any importer of that component fails.</td>
+            </tr>
+            <tr>
+              <td><code>modules/*.js</code></td>
+              <td>Focused reusable business logic.</td>
+              <td>The related feature fails.</td>
+            </tr>
+            <tr>
+              <td><code>styles/main.css</code></td>
+              <td>Appearance and responsive layout.</td>
+              <td>The app works but is largely unstyled.</td>
+            </tr>
+            <tr>
+              <td><code>public/images/*</code></td>
+              <td>Product and campaign visuals.</td>
+              <td>The related image does not load.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>10. Where to add features</h2>
+        <ul>
+          <li>Add a product: <code>src/data/products.js</code>.</li>
+          <li>
+            Add a new full page: create a file in <code>src/pages</code>, then
+            add a case to <code>renderRoute()</code> in
+            <code>src/main.js</code>.
+          </li>
+          <li>Add reusable visual markup: <code>src/components</code>.</li>
+          <li>
+            Add feature logic such as a wishlist: create a focused file in
+            <code>src/modules</code>.
+          </li>
+          <li>
+            Add persistent browser data: follow the
+            <code>storage.js</code> pattern.
+          </li>
+          <li>
+            Add styling: <code>src/styles/main.css</code>, beginning with mobile
+            styles and extending with <code>min-width</code> media queries.
+          </li>
+        </ul>
+      </section>
+    </main>
+  </body>
+</html>
