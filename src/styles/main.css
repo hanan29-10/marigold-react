@@ -1630,6 +1630,7 @@ body.drawer-open {
     right: 0;
     left: 0;
     display: flex;
+    flex-direction: column;
     gap: 21px;
     padding: 26px max(20px, 7vw) 30px;
     background: rgb(255 253 249 / 96%);
@@ -2073,5 +2074,233 @@ body.drawer-open {
     clip-path: polygon(0 0, 50% 0, 100% 100%, 50% 100%);
     content: '';
     pointer-events: none;
+  }
+}
+
+/* Premium homepage reference refinements. */
+.announcement-bar {
+  min-height: 40px;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.announcement-brand {
+  display: inline-grid;
+  grid-template-columns: 52px auto 52px;
+  gap: 10px;
+  align-items: center;
+  justify-self: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+}
+
+.announcement-brand i {
+  display: block;
+  width: 52px;
+  height: 1px;
+  background: rgb(255 252 246 / 42%);
+}
+
+.site-header {
+  min-height: 84px;
+}
+
+.site-header.scrolled {
+  min-height: 76px;
+}
+
+.hero-copy::after {
+  content: none;
+}
+
+.hero h1 em {
+  color: #a06b49;
+}
+
+.hero-description {
+  max-width: 430px;
+}
+
+.button-secondary {
+  border-color: var(--deep);
+}
+
+.hero-image {
+  background: #c7a98e;
+}
+
+.hero-slide {
+  object-position: center 46%;
+}
+
+.benefits {
+  gap: 0;
+  padding: 0 5%;
+  border-color: var(--line);
+  background: var(--cream);
+}
+
+.benefits article {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  min-height: 104px;
+  padding: 20px 14px;
+  background: var(--cream);
+}
+
+.benefits article:nth-child(odd) {
+  border-right: 1px solid var(--line);
+}
+
+.benefits article:nth-child(n + 3) {
+  border-top: 1px solid var(--line);
+}
+
+.benefits svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--gold);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.25;
+}
+
+.benefits h2,
+.benefits p {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.benefits h2 {
+  color: var(--deep);
+  font-family: 'DM Mono', monospace;
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.benefits p {
+  margin-top: 6px;
+  color: #756f68;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  line-height: 1.4;
+  text-transform: none;
+}
+
+@media (min-width: 700px) {
+  .site-header {
+    min-height: 85px;
+  }
+
+  .hero {
+    grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+    min-height: clamp(650px, 70svh, 720px);
+  }
+
+  .hero-copy,
+  .hero-image {
+    min-height: clamp(650px, 70svh, 720px);
+  }
+
+  .hero-copy {
+    padding: 72px clamp(48px, 8vw, 150px) 46px clamp(48px, 8vw, 150px);
+  }
+
+  .hero-copy::before {
+    right: -48px;
+    width: 96px;
+  }
+
+  .hero-image {
+    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .hero-slide {
+    object-position: center;
+  }
+
+  .benefits {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 0 7%;
+  }
+
+  .benefits article {
+    min-height: 126px;
+    padding: 28px clamp(16px, 2vw, 34px);
+  }
+
+  .benefits article:nth-child(odd),
+  .benefits article:nth-child(n + 3) {
+    border-top: 0;
+  }
+
+  .benefits article:not(:last-child) {
+    border-right: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 699px) {
+  .announcement-brand,
+  .announcement-bar span:last-child {
+    display: none;
+  }
+
+  .announcement-bar {
+    display: flex;
+    justify-content: center;
+    padding-inline: 20px;
+    text-align: center;
+  }
+
+  .hero-copy {
+    min-height: 500px;
+  }
+}
+
+/* Navbar alignment: keep the centred link group independent of the logo and actions. */
+.brand {
+  align-self: center;
+  border: 0;
+  background: transparent;
+}
+
+@media (min-width: 700px) {
+  .site-header {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+
+  .brand {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .site-header nav,
+  .site-header nav.open {
+    grid-column: 2;
+    display: flex;
+    gap: clamp(32px, 2.5vw, 40px);
+    align-items: center;
+    justify-self: center;
+    white-space: nowrap;
+  }
+
+  .site-header nav .nav-dropdown {
+    position: absolute;
+  }
+
+  .header-actions {
+    grid-column: 3;
+    justify-self: end;
   }
 }
