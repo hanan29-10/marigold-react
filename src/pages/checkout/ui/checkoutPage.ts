@@ -1,5 +1,5 @@
-import { getCart, getCartTotal } from '../modules/cart.js';
-import { money } from '../components/productCard.js';
+import { getCart, getCartTotal } from '../../../modules/cart';
+import { money } from '../../../modules/products';
 export function checkoutPage() {
   const cart = getCart();
   if (!cart.length)

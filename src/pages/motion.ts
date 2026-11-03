@@ -23,10 +23,15 @@ export function initMotion() {
 export function initSignatureCarousel() {
   const carousel = document.querySelector('[data-signature-carousel]');
   if (!carousel) return;
-  const track = carousel.querySelector('.signature-track');
-  const previous = carousel.querySelector('[data-carousel-previous]');
-  const next = carousel.querySelector('[data-carousel-next]');
-  const move = (direction) =>
+  const track = carousel.querySelector<HTMLElement>('.signature-track');
+  const previous = carousel.querySelector<HTMLButtonElement>(
+    '[data-carousel-previous]',
+  );
+  const next = carousel.querySelector<HTMLButtonElement>(
+    '[data-carousel-next]',
+  );
+  if (!track || !previous || !next) return;
+  const move = (direction: number) =>
     track.scrollBy({
       left: direction * track.clientWidth * 0.78,
       behavior: 'smooth',

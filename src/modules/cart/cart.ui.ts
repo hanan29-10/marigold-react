@@ -1,5 +1,5 @@
-import { getCart, getCartTotal } from '../modules/cart.js';
-import { money } from './productCard.js';
+import { getCart, getCartTotal } from './cart.logic';
+import { money } from '../products';
 
 export function cartDrawer() {
   const cart = getCart();

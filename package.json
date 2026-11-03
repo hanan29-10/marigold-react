@@ -8,10 +8,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "tsc": "tsc --noEmit"
   },
   "devDependencies": {
     "prettier": "^3.9.10",
+    "typescript": "^5.9.3",
     "vite": "^8.3.5"
   }
 }
