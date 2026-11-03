@@ -132,6 +132,12 @@ export function bindApplicationEvents({
       if (!id) return;
       removeFromCart(id);
       renderRoute();
+      return;
+    }
+    if (closest(event.target, '[data-clear-cart]')) {
+      clearCart();
+      renderRoute();
+      return;
     }
     const menu = closest(event.target, '.menu-button');
     if (menu) {
