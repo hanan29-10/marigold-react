@@ -9,4 +9,4 @@ export {
   updateQuantity,
 } from './cart.logic';
 export { cartDrawer } from './cart.ui';
-export type { CartItem } from './cart.types';
+export type { Cart, CartItem } from './cart.types';

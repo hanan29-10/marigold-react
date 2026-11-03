@@ -7,6 +7,27 @@ export type ProductCategory =
   | 'Accessories';
 export type ProductBadge =
   'Signature' | 'New season' | 'Limited' | 'Bestseller' | 'Gift edition';
+export const productCategories: readonly ProductCategory[] = [
+  'Totes',
+  'Shoulder Bags',
+  'Clutches',
+  'Travel',
+  'Crossbody',
+  'Accessories',
+];
+export const productBadges: readonly ProductBadge[] = [
+  'Signature',
+  'New season',
+  'Limited',
+  'Bestseller',
+  'Gift edition',
+];
+const categorySet: ReadonlySet<string> = new Set(productCategories);
+const badgeSet: ReadonlySet<string> = new Set(productBadges);
+export const isProductCategory = (value: string): value is ProductCategory =>
+  categorySet.has(value);
+export const isProductBadge = (value: string): value is ProductBadge =>
+  badgeSet.has(value);
 export interface Product {
   id: string;
   name: string;

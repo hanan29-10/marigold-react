@@ -7,6 +7,12 @@ interface CheckoutData {
 
 type CheckoutValidationResult =
   { valid: true; data: CheckoutData } | { valid: false; message: string };
+const requiredFields: readonly (keyof CheckoutData)[] = [
+  'name',
+  'email',
+  'address',
+  'city',
+];
 export function validateCheckout(
   form: HTMLFormElement,
 ): CheckoutValidationResult {
@@ -21,9 +27,7 @@ export function validateCheckout(
     address: getField('address'),
     city: getField('city'),
   };
-  const missing = (['name', 'email', 'address', 'city'] as const).filter(
-    (field) => !data[field].trim(),
-  );
+  const missing = requiredFields.filter((field) => !data[field].trim());
   if (missing.length)
     return { valid: false, message: 'Please complete all required fields.' };
   if (!/^\S+@\S+\.\S+$/.test(data.email))

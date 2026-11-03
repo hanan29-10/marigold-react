@@ -1,6 +1,12 @@
-import type { Product } from './products.types';
+import {
+  isProductBadge,
+  isProductCategory,
+  type Product,
+} from './products.types';
 
 const PRODUCTS_ENDPOINT = 'https://moron-api-kappa.vercel.app/api/products';
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
 
 export interface ProductsResponse {
   items: Product[];
@@ -9,15 +15,17 @@ export interface ProductsResponse {
 }
 
 const isProduct = (value: unknown): value is Product => {
-  if (!value || typeof value !== 'object') return false;
-  const product = value as Record<string, unknown>;
+  if (!isRecord(value)) return false;
+  const product = value;
   return (
     typeof product.id === 'string' &&
     typeof product.name === 'string' &&
     typeof product.category === 'string' &&
+    isProductCategory(product.category) &&
     typeof product.price === 'number' &&
     Number.isFinite(product.price) &&
     typeof product.badge === 'string' &&
+    isProductBadge(product.badge) &&
     typeof product.image === 'string' &&
     typeof product.description === 'string' &&
     (product.secondaryImage === undefined ||
@@ -26,8 +34,8 @@ const isProduct = (value: unknown): value is Product => {
 };
 
 const isProductsResponse = (value: unknown): value is ProductsResponse => {
-  if (!value || typeof value !== 'object') return false;
-  const response = value as Record<string, unknown>;
+  if (!isRecord(value)) return false;
+  const response = value;
   return (
     Array.isArray(response.items) &&
     response.items.every(isProduct) &&

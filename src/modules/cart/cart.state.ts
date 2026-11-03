@@ -1,11 +1,13 @@
 import type { Product } from '../products';
-import type { CartItem } from './cart.types';
+import type { Cart, CartItem } from './cart.types';
 
 const CART_KEY = 'shopboard-cart';
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
 
 function isProduct(value: unknown): value is Product {
-  if (!value || typeof value !== 'object') return false;
-  const product = value as Record<string, unknown>;
+  if (!isRecord(value)) return false;
+  const product = value;
   return (
     typeof product.id === 'string' &&
     typeof product.name === 'string' &&
@@ -21,8 +23,8 @@ function isProduct(value: unknown): value is Product {
 }
 
 function isValidCartItem(item: unknown): item is CartItem {
-  if (!item || typeof item !== 'object') return false;
-  const cartItem = item as Record<string, unknown>;
+  if (!isRecord(item)) return false;
+  const cartItem = item;
   return (
     isProduct(cartItem.product) &&
     typeof cartItem.quantity === 'number' &&
@@ -31,7 +33,7 @@ function isValidCartItem(item: unknown): item is CartItem {
   );
 }
 
-export function loadCart(): CartItem[] {
+export function loadCart(): Cart {
   try {
     const storedCart: unknown = JSON.parse(
       localStorage.getItem(CART_KEY) || '[]',
@@ -50,7 +52,7 @@ export function loadCart(): CartItem[] {
     return [];
   }
 }
-export function saveCart(cart: CartItem[]) {
+export function saveCart(cart: Cart) {
   try {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
   } catch {

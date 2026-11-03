@@ -1,4 +1,8 @@
-import type { Product, ProductCategory } from './products.types';
+import {
+  isProductCategory,
+  type Product,
+  type ProductCategory,
+} from './products.types';
 
 /** Stable references keep synchronous catalog and cart helpers intact after hydration. */
 export const products: Product[] = [];
@@ -16,6 +20,7 @@ export function replaceCatalog(
     ...nextCategories.filter(
       (category): category is ProductCategory =>
         category !== 'All' &&
+        isProductCategory(category) &&
         nextProducts.some((product) => product.category === category),
     ),
   );

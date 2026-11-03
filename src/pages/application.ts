@@ -28,7 +28,9 @@ import type {
   CatalogState,
   ProductCategory,
 } from '../modules/products';
-const app = document.querySelector<HTMLElement>('#app');
+import { isProductCategory } from '../modules/products/products.types';
+
+const app = document.querySelector('#app');
 const catalogState: CatalogState = {
   category: 'All',
   term: '',
@@ -36,17 +38,25 @@ const catalogState: CatalogState = {
 };
 let carouselTimer: ReturnType<typeof window.setInterval> | undefined;
 const isCategory = (value: string): value is ProductCategory | 'All' =>
-  categories.includes(value as ProductCategory | 'All');
+  categories.some((category) => category === value) &&
+  (value === 'All' || isProductCategory(value));
 const isCatalogSort = (value: string): value is CatalogSort =>
-  ['featured', 'price-low', 'price-high', 'name'].includes(value);
+  ['featured', 'price-low', 'price-high', 'name'].some(
+    (sort) => sort === value,
+  );
 function closest(
   target: EventTarget | null,
   selector: string,
 ): HTMLElement | null {
-  return target instanceof Element
-    ? target.closest<HTMLElement>(selector)
-    : null;
+  const match = target instanceof Element ? target.closest(selector) : null;
+  return match instanceof HTMLElement ? match : null;
 }
+const isFormControl = (
+  value: EventTarget | null,
+): value is HTMLInputElement | HTMLSelectElement =>
+  value instanceof HTMLInputElement || value instanceof HTMLSelectElement;
+const isForm = (value: EventTarget | null): value is HTMLFormElement =>
+  value instanceof HTMLFormElement;
 
 function renderLayout(content: string) {
   window.clearInterval(carouselTimer);
@@ -97,10 +107,13 @@ export function startApplication() {
     const add = closest(event.target, '[data-add]');
     if (add) {
       const product = products.find((item) => item.id === add.dataset.add);
-      const quantitySelect =
-        document.querySelector<HTMLSelectElement>('#quantity');
+      const quantitySelect = document.querySelector('#quantity');
       const quantity = add.hasAttribute('data-detail-add')
-        ? Number(quantitySelect?.value ?? '1')
+        ? Number(
+            quantitySelect instanceof HTMLSelectElement
+              ? quantitySelect.value
+              : '1',
+          )
         : 1;
       if (!product || !Number.isInteger(quantity) || quantity < 1) return;
       addToCart(product, quantity);
@@ -186,49 +199,45 @@ export function startApplication() {
     if (closest(event.target, '.drawer-close, .drawer-scrim')) setDrawer(false);
     if (closest(event.target, '.search-link')) {
       location.hash = '#/shop';
-      window.setTimeout(
-        () => document.querySelector<HTMLElement>('#search')?.focus(),
-        0,
-      );
+      window.setTimeout(() => {
+        const searchInput = document.querySelector('#search');
+        if (searchInput instanceof HTMLElement) searchInput.focus();
+      }, 0);
     }
     if (closest(event.target, '.account-link')) {
       showToast('Account sign-in is coming soon.');
     }
   });
   document.addEventListener('input', (event) => {
-    if ((event.target as HTMLElement).id === 'search') {
-      catalogState.term = (
-        event.target as HTMLInputElement | HTMLSelectElement
-      ).value;
+    if (isFormControl(event.target) && event.target.id === 'search') {
+      catalogState.term = event.target.value;
       renderCatalog(catalogState);
     }
   });
   document.addEventListener('change', (event) => {
-    if ((event.target as HTMLElement).id === 'sort') {
-      const sort = (event.target as HTMLInputElement | HTMLSelectElement).value;
+    if (isFormControl(event.target) && event.target.id === 'sort') {
+      const sort = event.target.value;
       if (!isCatalogSort(sort)) return;
       catalogState.sort = sort;
       renderCatalog(catalogState);
     }
   });
   document.addEventListener('submit', (event) => {
-    if ((event.target as HTMLElement).id === 'newsletter-form') {
+    if (isForm(event.target) && event.target.id === 'newsletter-form') {
       event.preventDefault();
-      (event.target as HTMLFormElement).reset();
-      const newsletterMessage = document.querySelector<HTMLElement>(
-        '.newsletter-message',
-      );
-      if (newsletterMessage)
+      event.target.reset();
+      const newsletterMessage = document.querySelector('.newsletter-message');
+      if (newsletterMessage instanceof HTMLElement)
         newsletterMessage.textContent = 'Thank you — you are on the list.';
       return;
     }
-    if ((event.target as HTMLElement).id !== 'checkout-form') return;
+    if (!isForm(event.target) || event.target.id !== 'checkout-form') return;
     event.preventDefault();
-    const form = event.target as HTMLFormElement;
+    const form = event.target;
     const result = validateCheckout(form);
-    const message = form.querySelector<HTMLElement>('.form-message');
+    const message = form.querySelector('.form-message');
     if (!result.valid) {
-      if (message) message.textContent = result.message;
+      if (message instanceof HTMLElement) message.textContent = result.message;
       return;
     }
     clearCart();

@@ -1,7 +1,7 @@
 import { loadCart, saveCart } from './cart.state';
 import type { Product } from '../products';
-import type { CartItem } from './cart.types';
-let cart: CartItem[] = loadCart();
+import type { Cart } from './cart.types';
+let cart: Cart = loadCart();
 const notify = () =>
   document.dispatchEvent(
     new CustomEvent('cart:updated', { detail: getCart() }),
