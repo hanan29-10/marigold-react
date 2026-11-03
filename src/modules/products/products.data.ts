@@ -4,7 +4,10 @@ import type { Product, ProductCategory } from './products.types';
 export const products: Product[] = [];
 export const categories: Array<ProductCategory | 'All'> = ['All'];
 
-export function replaceCatalog(nextProducts: Product[], nextCategories: string[]) {
+export function replaceCatalog(
+  nextProducts: Product[],
+  nextCategories: string[],
+) {
   products.splice(0, products.length, ...nextProducts);
   categories.splice(
     0,

@@ -33,7 +33,9 @@ function isValidCartItem(item: unknown): item is CartItem {
 
 export function loadCart(): CartItem[] {
   try {
-    const storedCart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    const storedCart: unknown = JSON.parse(
+      localStorage.getItem(CART_KEY) || '[]',
+    );
     if (!Array.isArray(storedCart)) return [];
 
     const cart = storedCart.filter(isValidCartItem);

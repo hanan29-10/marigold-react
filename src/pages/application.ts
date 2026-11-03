@@ -29,7 +29,7 @@ import type {
   ProductCategory,
 } from '../modules/products';
 const app = document.querySelector<HTMLElement>('#app');
-let catalogState: CatalogState = {
+const catalogState: CatalogState = {
   category: 'All',
   term: '',
   sort: 'featured',
@@ -44,7 +44,7 @@ function closest(
   selector: string,
 ): HTMLElement | null {
   return target instanceof Element
-    ? (target.closest(selector) as HTMLElement | null)
+    ? target.closest<HTMLElement>(selector)
     : null;
 }
 
@@ -97,10 +97,10 @@ export function startApplication() {
     const add = closest(event.target, '[data-add]');
     if (add) {
       const product = products.find((item) => item.id === add.dataset.add);
+      const quantitySelect =
+        document.querySelector<HTMLSelectElement>('#quantity');
       const quantity = add.hasAttribute('data-detail-add')
-        ? Number(
-            (document.querySelector('#quantity') as HTMLSelectElement).value,
-          )
+        ? Number(quantitySelect?.value ?? '1')
         : 1;
       if (!product || !Number.isInteger(quantity) || quantity < 1) return;
       addToCart(product, quantity);
@@ -187,8 +187,7 @@ export function startApplication() {
     if (closest(event.target, '.search-link')) {
       location.hash = '#/shop';
       window.setTimeout(
-        () =>
-          (document.querySelector('#search') as HTMLElement | null)?.focus(),
+        () => document.querySelector<HTMLElement>('#search')?.focus(),
         0,
       );
     }

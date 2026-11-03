@@ -11,18 +11,22 @@ export function validateCheckout(
   form: HTMLFormElement,
 ): CheckoutValidationResult {
   const formData = new FormData(form);
+  const getField = (field: keyof CheckoutData) => {
+    const value = formData.get(field);
+    return typeof value === 'string' ? value : '';
+  };
   const data: CheckoutData = {
-    name: String(formData.get('name') ?? ''),
-    email: String(formData.get('email') ?? ''),
-    address: String(formData.get('address') ?? ''),
-    city: String(formData.get('city') ?? ''),
+    name: getField('name'),
+    email: getField('email'),
+    address: getField('address'),
+    city: getField('city'),
   };
   const missing = (['name', 'email', 'address', 'city'] as const).filter(
-    (field) => !String(data[field] || '').trim(),
+    (field) => !data[field].trim(),
   );
   if (missing.length)
     return { valid: false, message: 'Please complete all required fields.' };
-  if (!/^\S+@\S+\.\S+$/.test(String(data.email || '')))
+  if (!/^\S+@\S+\.\S+$/.test(data.email))
     return { valid: false, message: 'Enter a valid email address.' };
   return { valid: true, data };
 }

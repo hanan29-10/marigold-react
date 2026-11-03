@@ -1,4 +1,4 @@
-import type { Product, ProductBadge, ProductCategory } from './products.types';
+import type { Product } from './products.types';
 
 const PRODUCTS_ENDPOINT = 'https://moron-api-kappa.vercel.app/api/products';
 
@@ -39,17 +39,12 @@ const isProductsResponse = (value: unknown): value is ProductsResponse => {
 
 export async function fetchProducts(): Promise<ProductsResponse> {
   const response = await fetch(PRODUCTS_ENDPOINT);
-  if (!response.ok) throw new Error(`Products request failed (${response.status}).`);
+  if (!response.ok)
+    throw new Error(`Products request failed (${response.status}).`);
 
   const payload: unknown = await response.json();
-  if (!isProductsResponse(payload)) throw new Error('Products API returned an invalid response.');
+  if (!isProductsResponse(payload))
+    throw new Error('Products API returned an invalid response.');
 
-  return {
-    ...payload,
-    items: payload.items.map((product) => ({
-      ...product,
-      category: product.category as ProductCategory,
-      badge: product.badge as ProductBadge,
-    })),
-  };
+  return payload;
 }
