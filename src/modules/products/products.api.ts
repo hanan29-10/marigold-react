@@ -10,6 +10,28 @@ const RETRY_DELAY_MS = 1_000;
 const retryableStatuses = new Set([502, 503, 504]);
 let inFlightRequest: Promise<ProductsResponse> | undefined;
 
+export type ProductsConnectionStatus =
+  'idle' | 'loading' | 'retrying' | 'online' | 'error';
+
+type ProductsConnectionListener = (status: ProductsConnectionStatus) => void;
+
+let connectionStatus: ProductsConnectionStatus = 'idle';
+const connectionListeners = new Set<ProductsConnectionListener>();
+
+const setConnectionStatus = (status: ProductsConnectionStatus) => {
+  connectionStatus = status;
+  connectionListeners.forEach((listener) => listener(status));
+};
+
+export const getProductsConnectionStatus = () => connectionStatus;
+
+export const subscribeToProductsConnection = (
+  listener: ProductsConnectionListener,
+) => {
+  connectionListeners.add(listener);
+  return () => connectionListeners.delete(listener);
+};
+
 class ProductsRequestError extends Error {
   constructor(
     message: string,
@@ -104,6 +126,7 @@ async function requestProductsWithRetry(): Promise<ProductsResponse> {
     return await requestProducts();
   } catch (error) {
     if (!shouldRetry(error)) throw error;
+    setConnectionStatus('retrying');
     await wait(RETRY_DELAY_MS);
     return requestProducts();
   }
@@ -112,7 +135,17 @@ async function requestProductsWithRetry(): Promise<ProductsResponse> {
 export function fetchProducts(): Promise<ProductsResponse> {
   if (inFlightRequest) return inFlightRequest;
 
-  const request = requestProductsWithRetry();
+  setConnectionStatus('loading');
+  const request = requestProductsWithRetry().then(
+    (response) => {
+      setConnectionStatus('online');
+      return response;
+    },
+    (error: unknown) => {
+      setConnectionStatus('error');
+      throw error;
+    },
+  );
   const sharedRequest = request.finally(() => {
     if (inFlightRequest === sharedRequest) inFlightRequest = undefined;
   });
