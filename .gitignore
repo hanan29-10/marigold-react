@@ -22,8 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
 # OpenAI
 .env
 .env.local
 .env.*.local
 .openai/
+
+# Environment files
+.env
+.env.local
+.env.*.local
