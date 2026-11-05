@@ -6,6 +6,8 @@
     "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "erasableSyntaxOnly": true,
     "noEmit": true,
     "strict": true,
     "noFallthroughCasesInSwitch": true

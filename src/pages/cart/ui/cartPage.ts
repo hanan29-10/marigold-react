@@ -1,6 +1,0 @@
-import { getCart, getCartTotal } from '../../../modules/cart';
-import { money } from '../../../modules/products';
-export function cartPage() {
-  const cart = getCart();
-  return `<section class="page"><p class="eyebrow">Your selection</p><h1>Shopping bag</h1>${cart.length ? `<div class="cart-layout"><ul class="cart-list">${cart.map(({ product, quantity }) => `<li><img src="${product.image}" alt=""><div><h2>${product.name}</h2><p>${money(product.price)}</p><div class="quantity-actions"><button type="button" data-quantity="${product.id}" data-change="-1" aria-label="Decrease ${product.name} quantity">−</button><span>${quantity}</span><button type="button" data-quantity="${product.id}" data-change="1" aria-label="Increase ${product.name} quantity">+</button><button type="button" data-remove="${product.id}">Remove</button></div></div><strong>${money(product.price * quantity)}</strong></li>`).join('')}</ul><aside class="summary"><h2>Order summary</h2><div><span>Subtotal</span><strong>${money(getCartTotal())}</strong></div><p>Shipping is calculated at checkout.</p><a class="button" href="#/checkout">Checkout <span>&rarr;</span></a><button class="button button-secondary" type="button" data-clear-cart>Clear bag</button></aside></div>` : '<p class="empty">Your bag is empty. <a href="#/shop">Explore the collection.</a></p>'}</section>`;
-}

@@ -3,11 +3,18 @@ import prettier from 'eslint-config-prettier';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist/**', 'node_modules/**', 'eslint.config.js'] },
+  {
+    ignores: [
+      'dist/**',
+      'node_modules/**',
+      'vite.config.ts',
+      'eslint.config.js',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   {
-    files: ['src/**/*.ts'],
+    files: ['src/**/*.{ts,tsx}'],
     languageOptions: {
       parserOptions: {
         projectService: true,

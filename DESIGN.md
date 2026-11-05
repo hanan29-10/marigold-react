@@ -1,8 +1,8 @@
-# MORON Visual Style Guide
+# MARIGOLD Visual Style Guide
 
 ## Brand direction
 
-MORON is a quiet luxury leather-goods brand. The visual language is editorial, warm, and considered: refined rather than ornate, with spacious compositions, natural material cues, and understated confidence.
+MARIGOLD is a quiet luxury leather-goods brand. The visual language is editorial, warm, and considered: refined rather than ornate, with spacious compositions, natural material cues, and understated confidence.
 
 The experience should feel like a well-produced print journal translated to commerce. Product imagery carries most of the visual weight; interface chrome stays restrained.
 
@@ -15,7 +15,7 @@ The experience should feel like a well-produced print journal translated to comm
 
 ## Reference adaptation
 
-The implemented site translates the reference into a MORON-specific commerce experience rather than reproducing it literally. It combines a restrained announcement bar, centred desktop navigation, a stacked-to-split editorial hero, and an offset two-piece arrivals edit. Interaction details support the same quiet-luxury direction: hover treatments are limited to precise pointers, controls retain visible focus states, touch targets are enlarged, and reduced-motion preferences remove nonessential movement.
+The implemented site translates the reference into a MARIGOLD-specific commerce experience rather than reproducing it literally. It combines a restrained announcement bar, centred desktop navigation, a stacked-to-split editorial hero, and an offset two-piece arrivals edit. Interaction details support the same quiet-luxury direction: hover treatments are limited to precise pointers, controls retain visible focus states, touch targets are enlarged, and reduced-motion preferences remove nonessential movement.
 
 ## Color system
 
@@ -76,7 +76,7 @@ Use warm, editorial product imagery with natural textures, quiet shadows, and ta
 
 ### Header
 
-The header is a clean light bar with the MORON wordmark on the left, navigation centered on desktop, and utility actions on the right. On mobile, navigation is revealed by a compact menu control.
+The header is a clean light bar with the MARIGOLD wordmark on the left, navigation centered on desktop, and utility actions on the right. On mobile, navigation is revealed by a compact menu control.
 
 The wordmark uses Playfair Display with wide tracking; the descriptor uses tiny DM Mono text. Keep it uncluttered.
 
