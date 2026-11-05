@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.openai/
+
+
+# OpenAI
+.env
+.env.local
+.env.*.local
+.openai/
