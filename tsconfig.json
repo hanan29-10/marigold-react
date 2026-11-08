@@ -7,6 +7,9 @@
     "skipLibCheck": true,
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "erasableSyntaxOnly": true,
     "noEmit": true,
     "strict": true,

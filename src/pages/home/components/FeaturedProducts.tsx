@@ -1,5 +1,5 @@
-import type { Product } from '../../../features/products/products.types';
-import { ProductCard } from '../../../features/products/ProductCard';
+import type { Product } from '../../../modules/products/products.types';
+import { ProductCard } from '../../../modules/products/components/ProductCard';
 export interface FeaturedProductsProps {
   title: string;
   eyebrow: string;

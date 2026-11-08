@@ -18,7 +18,7 @@ interface RequestJsonOptions {
   timeoutMs?: number;
 }
 
-class ApiRequestError extends Error {
+export class ApiRequestError extends Error {
   readonly status: number;
 
   constructor(message: string, status: number) {
@@ -27,6 +27,9 @@ class ApiRequestError extends Error {
     this.status = status;
   }
 }
+
+export const isApiNotFoundError = (error: unknown) =>
+  error instanceof ApiRequestError && error.status === 404;
 
 let connectionStatus: ApiConnectionStatus = 'idle';
 const connectionListeners = new Set<ApiConnectionListener>();

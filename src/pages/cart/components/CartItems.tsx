@@ -1,10 +1,11 @@
-import { useCart } from '../../../features/cart/CartProvider';
-import { money } from '../../../features/products/products.format';
+import { useCart } from '../../../modules/cart/CartProvider';
+import { MAX_CART_ITEM_QUANTITY } from '../../../modules/cart/cart.types';
+import { money } from '../../../modules/products/products.format';
 export function CartItems() {
-  const { cart, remove, update } = useCart();
+  const { items, remove, update } = useCart();
   return (
     <ul className="cart-list">
-      {cart.map(({ product, quantity }) => (
+      {items.map(({ product, quantity }) => (
         <li key={product.id}>
           <img src={product.image} alt="" />
           <div>
@@ -21,6 +22,7 @@ export function CartItems() {
               <button
                 onClick={() => update(product.id, quantity + 1)}
                 aria-label={`Increase ${product.name} quantity`}
+                disabled={quantity === MAX_CART_ITEM_QUANTITY}
               >
                 +
               </button>

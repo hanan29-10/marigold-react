@@ -28,7 +28,7 @@ export function Collections() {
           {collections.map(([category, className]) => (
             <a
               key={category}
-              href="#/shop"
+              href="/shop"
               className={`category-tile ${className}`}
               onClick={() =>
                 sessionStorage.setItem('marigold-category', category)

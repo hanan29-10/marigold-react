@@ -1,7 +1,7 @@
 import {
   isCatalogSort,
   type CatalogSort,
-} from '../../../features/products/products.types';
+} from '../../../modules/products/products.types';
 
 export interface SearchBarProps {
   term: string;

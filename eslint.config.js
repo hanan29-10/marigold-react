@@ -8,6 +8,8 @@ export default tseslint.config(
       'dist/**',
       'node_modules/**',
       'vite.config.ts',
+      'playwright.config.ts',
+      'tests/**',
       'eslint.config.js',
     ],
   },
@@ -20,6 +22,9 @@ export default tseslint.config(
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
+    },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'error',
     },
   },
   prettier,

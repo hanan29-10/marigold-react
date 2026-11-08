@@ -1,6 +1,6 @@
-import { useWishlist } from '../../features/wishlist/WishlistProvider';
-import { ProductCard } from '../../features/products/ProductCard';
-import type { Product } from '../../features/products/products.types';
+import { ProductCard } from '../../modules/products/components/ProductCard';
+import { useWishlist } from '../../modules/wishlist/WishlistProvider';
+import type { Product } from '../../modules/products/products.types';
 
 interface WishlistPageProps {
   products: Product[];
@@ -25,7 +25,7 @@ export function WishlistPage({ products }: WishlistPageProps) {
       ) : (
         <p className="empty">
           Your saved edit is waiting.{' '}
-          <a href="#/shop">Explore the collection.</a>
+          <a href="/shop">Explore the collection.</a>
         </p>
       )}
     </section>

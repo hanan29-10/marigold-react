@@ -1,4 +1,4 @@
-import type { Product } from '../../features/products/products.types';
+import type { Product } from '../../modules/products/products.types';
 import { Collections } from './components/Collections';
 import { FeaturedProducts } from './components/FeaturedProducts';
 import { HeroCarousel } from './components/HeroCarousel';
@@ -26,7 +26,7 @@ export function HomePage({ products }: { products: Product[] }) {
             way forward.
           </h2>
           <p>Meet the soft leather pieces designed around a life in motion.</p>
-          <a href="#/shop" className="button button-light">
+          <a href="/shop" className="button button-light">
             Discover the story <span>→</span>
           </a>
         </div>

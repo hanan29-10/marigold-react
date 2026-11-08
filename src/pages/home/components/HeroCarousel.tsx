@@ -30,10 +30,10 @@ export function HeroCarousel() {
             every chapter.
           </p>
           <div className="hero-actions hero-reveal">
-            <a className="button" href="#/shop">
+            <a className="button" href="/shop">
               Explore the collection <span>→</span>
             </a>
-            <a className="button button-secondary" href="#/shop">
+            <a className="button button-secondary" href="/shop">
               New in <span>→</span>
             </a>
           </div>

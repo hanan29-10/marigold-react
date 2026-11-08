@@ -1,4 +1,4 @@
-import type { ProductCategory } from '../../../features/products/products.types';
+import type { ProductCategory } from '../../../modules/products/products.types';
 export interface ProductFiltersProps {
   categories: Array<ProductCategory | 'All'>;
   selected: ProductCategory | 'All';

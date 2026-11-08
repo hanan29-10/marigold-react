@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { getCatalog } from '../../features/products/products.logic';
+import { getCatalog } from '../../modules/products/products.logic';
 import {
   isProductCategory,
   type CatalogSort,
   type CatalogState,
   type Product,
   type ProductCategory,
-} from '../../features/products/products.types';
+} from '../../modules/products/products.types';
 import { ProductFilters } from './components/ProductFilters';
 import { ProductGrid } from './components/ProductGrid';
 import { SearchBar } from './components/SearchBar';
